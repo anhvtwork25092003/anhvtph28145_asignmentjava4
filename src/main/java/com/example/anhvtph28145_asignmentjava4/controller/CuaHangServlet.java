@@ -20,6 +20,28 @@ public class CuaHangServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
+        if (uri.contains("view-all")) {
+            this.hienThi(request, response);
+        } else if (uri.contains("detail")) {
+            this.detail(request, response);
+        } else if (uri.contains("remove")) {
+            this.remove(request, response);
+        } else if (uri.contains("view-update")) {
+            this.viewUpdate(request, response);
+        }
+    }
+
+    private void hienThi(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void remove(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) {
     }
 
     @Override

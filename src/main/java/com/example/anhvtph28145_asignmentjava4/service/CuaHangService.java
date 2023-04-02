@@ -1,0 +1,17 @@
+package com.example.anhvtph28145_asignmentjava4.service;
+
+import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
+
+import java.util.List;
+
+public interface CuaHangService {
+    List<CuaHang> getAll();
+
+    CuaHang getOne(String id);
+
+    String remove(CuaHang ch);
+
+    String add(CuaHang ch);
+
+    String update(CuaHang ch);
+}

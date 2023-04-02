@@ -5,9 +5,9 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Đây là bài cuối môn đầy mồ hôi nước mắt của Tuấn Anh !" %>
+<h1><%= "Đây là bài cuối môn đổ mồ hôi sôi nước mắt của Tuấn Anh !" %>
 </h1>
 <br/>
-<a href="hello-servlet">Cửa Hàng</a>
+<a href="/cua-hang/view-all">Cửa Hàng</a>
 </body>
 </html>

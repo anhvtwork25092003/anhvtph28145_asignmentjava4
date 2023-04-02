@@ -1,6 +1,6 @@
 package com.example.anhvtph28145_asignmentjava4.repository;
 
-import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
+import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
 import com.example.anhvtph28145_asignmentjava4.util.HibernateUtil;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
@@ -9,38 +9,35 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuaHangRepository {
-    List<CuaHang> listCuaHang = new ArrayList<>();
-
+public class ChucVuRepository {
     public static void main(String[] args) {
         System.out.println(new CuaHangRepository().getOne("22E44B40-633A-4A89-A6F1-1C847D5F0AA9"));
     }
 
-
-
-    public List<CuaHang> getAll() {
+    public List<ChucVu> getAll() {
+        List<ChucVu> listCV = new ArrayList<>();
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
-            Query query = session.createQuery("from CuaHang ", CuaHang.class);
-            listCuaHang = query.getResultList();
+            Query query = session.createQuery("from ChucVu ", ChucVu.class);
+            listCV = query.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return listCuaHang;
+        return listCV;
     }
 
-    public CuaHang getOne(String id) {
-        CuaHang ch = null;
+    public ChucVu getOne(String id) {
+        ChucVu ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
-            Query query = session.createQuery("from CuaHang where id =:id1", CuaHang.class);
+            Query query = session.createQuery("from ChucVu where id =:id1", ChucVu.class);
             query.setParameter("id1", id);
-            ch = (CuaHang) query.getSingleResult();
+            ch = (ChucVu) query.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return ch;
     }
 
-    public boolean remove(CuaHang cuaHang) {
+    public boolean remove(ChucVu cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -53,7 +50,7 @@ public class CuaHangRepository {
         return false;
     }
 
-    public boolean add(CuaHang cuaHang) {
+    public boolean add(ChucVu cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -66,7 +63,7 @@ public class CuaHangRepository {
         return false;
     }
 
-    public boolean update(CuaHang cuaHang) {
+    public boolean update(ChucVu cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -78,6 +75,5 @@ public class CuaHangRepository {
         }
         return false;
     }
-
 
 }

@@ -13,6 +13,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "CuaHang")
 @Getter
@@ -24,10 +26,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 public class CuaHang {
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(generator = "uuid2")
-    @Column(columnDefinition = "varchar(36)", name = "id")
-    private String id;
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "Id", columnDefinition = "uniqueidentifier default newid()")
+    private UUID id;
 
     @Column(name = "Ma")
     private String ma;

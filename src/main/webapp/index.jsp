@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="/cua-hang/view-all">Cửa Hàng</a>
+<a href="/chuc-vu/view-all">Chuc vu</a>
 </body>
 </html>

@@ -37,7 +37,7 @@
             <%--    ma--%>
             <div class="mb-3">
                 <label for="ma">Ma:</label>
-                <input type="text" class="form-control" id="ma" placeholder="" name="maInput" value="${ch.ma}">
+                <input type="text" class="form-control" id="ma" placeholder="" name="maInput" value="${ch.ma}" required>
             </div>
             <%--    ten--%>
             <div class="mb-3">
@@ -64,7 +64,13 @@
             </div>
             <button type="submit" class="btn btn-success" onclick="return confirm('Xán nhận thêm cửa hàng?')">ADD
             </button>
-            <div class="text-danger">${thongBaoAdd}</div>
+<%--            <div class="text-danger">${thongBaoAddd}</div>--%>
+            <% if (request.getSession().getAttribute("thongBaoError") != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= request.getSession().getAttribute("thongBaoError") %>
+            </div>
+            <% request.getSession().removeAttribute("thongBaoError"); %>
+            <% } %>
         </form>
     </div>
     <%--    tbale của hàng--%>

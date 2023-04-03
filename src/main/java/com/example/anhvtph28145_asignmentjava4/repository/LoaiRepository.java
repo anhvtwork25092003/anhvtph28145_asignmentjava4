@@ -1,6 +1,7 @@
 package com.example.anhvtph28145_asignmentjava4.repository;
 
-import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
+import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
+import com.example.anhvtph28145_asignmentjava4.entity.Loai;
 import com.example.anhvtph28145_asignmentjava4.util.HibernateUtil;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
@@ -10,32 +11,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ChucVuRepository {
-
-    public List<ChucVu> getAll() {
-        List<ChucVu> listCV = new ArrayList<>();
+public class LoaiRepository {
+    public static void main(String[] args) {
+        System.out.println(new LoaiRepository().getAll());
+    }
+    public List<Loai> getAll() {
+        List<Loai> listLoai = new ArrayList<>();
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
-            Query query = session.createQuery("from ChucVu ", ChucVu.class);
-            listCV = query.getResultList();
+            Query query = session.createQuery("from Loai ", Loai.class);
+            listLoai = query.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return listCV;
+        return listLoai;
     }
 
-    public ChucVu getOne(UUID id) {
-        ChucVu ch = null;
+    public Loai getOne(UUID id) {
+        Loai ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
-            Query query = session.createQuery("from ChucVu where id =:id1", ChucVu.class);
+            Query query = session.createQuery("from Loai where id =:id1", Loai.class);
             query.setParameter("id1", id);
-            ch = (ChucVu) query.getSingleResult();
+            ch = (Loai) query.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
+
         }
         return ch;
     }
 
-    public boolean remove(ChucVu cuaHang) {
+    public boolean remove(Loai cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -44,11 +48,12 @@ public class ChucVuRepository {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            transaction.rollback();
         }
         return false;
     }
 
-    public boolean add(ChucVu cuaHang) {
+    public boolean add(Loai cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -57,11 +62,12 @@ public class ChucVuRepository {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            transaction.rollback();
         }
         return false;
     }
 
-    public boolean update(ChucVu cuaHang) {
+    public boolean update(Loai cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             transaction = session.beginTransaction();

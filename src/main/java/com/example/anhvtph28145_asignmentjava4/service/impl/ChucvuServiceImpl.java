@@ -5,6 +5,7 @@ import com.example.anhvtph28145_asignmentjava4.repository.ChucVuRepository;
 import com.example.anhvtph28145_asignmentjava4.service.ChucVuService;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ChucvuServiceImpl implements ChucVuService {
     ChucVuRepository chucVuRepository = new ChucVuRepository();
@@ -15,7 +16,7 @@ public class ChucvuServiceImpl implements ChucVuService {
     }
 
     @Override
-    public ChucVu getOne(String id) {
+    public ChucVu getOne(UUID id) {
         return this.chucVuRepository.getOne(id);
     }
 

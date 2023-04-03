@@ -8,17 +8,12 @@ import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CuaHangRepository {
-    List<CuaHang> listCuaHang = new ArrayList<>();
-
-    public static void main(String[] args) {
-        System.out.println(new CuaHangRepository().getOne("22E44B40-633A-4A89-A6F1-1C847D5F0AA9"));
-    }
-
-
 
     public List<CuaHang> getAll() {
+        List<CuaHang> listCuaHang = new ArrayList<>();
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("from CuaHang ", CuaHang.class);
             listCuaHang = query.getResultList();
@@ -28,7 +23,7 @@ public class CuaHangRepository {
         return listCuaHang;
     }
 
-    public CuaHang getOne(String id) {
+    public CuaHang getOne(UUID id) {
         CuaHang ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("from CuaHang where id =:id1", CuaHang.class);
@@ -36,6 +31,7 @@ public class CuaHangRepository {
             ch = (CuaHang) query.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
+
         }
         return ch;
     }
@@ -49,6 +45,7 @@ public class CuaHangRepository {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            transaction.rollback();
         }
         return false;
     }
@@ -62,6 +59,7 @@ public class CuaHangRepository {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
+            transaction.rollback();
         }
         return false;
     }

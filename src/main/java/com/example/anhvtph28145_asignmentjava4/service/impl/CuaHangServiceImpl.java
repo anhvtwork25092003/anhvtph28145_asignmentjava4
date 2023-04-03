@@ -5,6 +5,7 @@ import com.example.anhvtph28145_asignmentjava4.repository.CuaHangRepository;
 import com.example.anhvtph28145_asignmentjava4.service.CuaHangService;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CuaHangServiceImpl implements CuaHangService {
     CuaHangRepository cuaHangRepository = new CuaHangRepository();
@@ -15,7 +16,7 @@ public class CuaHangServiceImpl implements CuaHangService {
     }
 
     @Override
-    public CuaHang getOne(String id) {
+    public CuaHang getOne(UUID id) {
         return this.cuaHangRepository.getOne(id);
     }
 

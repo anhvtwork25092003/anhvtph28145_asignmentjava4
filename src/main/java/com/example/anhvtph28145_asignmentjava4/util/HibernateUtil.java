@@ -3,6 +3,7 @@ package com.example.anhvtph28145_asignmentjava4.util;
 
 import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
 import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
+import com.example.anhvtph28145_asignmentjava4.entity.Loai;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -28,6 +29,7 @@ public class HibernateUtil {
         conf.setProperties(properties);
         conf.addAnnotatedClass(CuaHang.class);
         conf.addAnnotatedClass(ChucVu.class);
+        conf.addAnnotatedClass(Loai.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>View update cua hang!</title>
 </head>
 <body>
 <form action="/cua-hang/update" method="post">
@@ -20,6 +20,7 @@
     <div> Thanh Pho:<input type="text" name="thanhPhoInput" value="${ch.thanhPho}"></div>
     <div> Quoc Gia:<input type="text" name="quocGiaInput" value="${ch.quocGia}"></div>
     <button type="submit" onclick="return confirm('Ban muon cap nhat ?')">Update</button>
+    ${thongBaoError}
 </form>
 </body>
 </html>

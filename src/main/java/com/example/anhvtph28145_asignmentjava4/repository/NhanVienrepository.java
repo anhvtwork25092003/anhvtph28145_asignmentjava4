@@ -23,7 +23,7 @@ public class NhanVienrepository {
         return listMauSac;
     }
 
-    public NhanVien getOne(UUID id) {
+    public NhanVien getOne(String id) {
         NhanVien ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("from NhanVien where id =:id1", NhanVien.class);

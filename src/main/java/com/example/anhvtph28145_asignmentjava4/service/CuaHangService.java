@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface CuaHangService {
     List<CuaHang> getAll();
 
-    CuaHang getOne(UUID id);
+    CuaHang getOne(String id);
 
     String remove(CuaHang ch);
 

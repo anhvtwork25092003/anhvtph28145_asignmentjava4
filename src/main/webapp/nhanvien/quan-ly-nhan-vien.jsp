@@ -86,17 +86,18 @@
             </div>
             <%--    Cua Hang--%>
             <div class="mb-3">
-                <label>IDCH</label> </br>
-                <select name=IdCH" class="form-control" required>
-                    <c:forEach items="${ danhSachCH }" var="ch">
+                <label>Cua Hang</label> </br>
+                <select name="IdCH" class="form-control" required>
+                    <c:forEach items="${danhSachCH}" var="ch">
                         <option value="${ch.id}">${ch.ten}</option>
                     </c:forEach>
                 </select>
             </div>
             <%--   Chuc vu--%>
             <div class="mb-3">
-                <select name=IdCV" class="form-control" required>
-                    <c:forEach items="${ danhSachCV }" var="cv">
+                <label>Chuc Vu</label> </br>
+                <select name="IdCV" class="form-control" required>
+                    <c:forEach items="${danhSachCV}" var="cv">
                         <option value="${cv.id}">${cv.ten}</option>
                     </c:forEach>
                 </select>
@@ -104,9 +105,9 @@
             <%--   Ctrang thai--%>
             <div class="mb-3">
                 <div class="col-6">
-                    <label>Giới tính</label>
-                    <input type="radio" name="gioiTinhInput" ${ch.trangThai == 1?"checked":""} value="1" checked/>Lam
-                    <input type="radio" name="gioiTinhInput" ${ch.trangThai == 0?"checked":""} value="0"/>Nghi
+                    <label>Trang Thai</label>
+                    <input type="radio" name="trangThai" ${ch.trangThai == 1?"checked":""} value="1" checked/>Lam
+                    <input type="radio" name="trangThai" ${ch.trangThai == 0?"checked":""} value="0"/>Nghi
                 </div>
             </div>
             <button type="submit" class="btn btn-success" onclick="return confirm('Xán nhận thêm cửa hàng?')">ADD
@@ -129,13 +130,14 @@
                 <th>Tên</th>
                 <th>Tên đệm</th>
                 <th>Họ</th>
+                <th>Gioi Tinh</th>
                 <th>ngay sinh</th>
                 <th>sdt</th>
-                <th>Gioi Tinh</th>
                 <th>dia chi</th>
-                <th>thanh pho</th>
-                <th>quoc gia</th>
+                <th>Cua Hang</th>
+                <th>Chuc vu</th>
                 <th>mat khau</th>
+                <th>Trang Thai</th>
                 <th colspan="2">Action</th>
             </tr>
             </thead>

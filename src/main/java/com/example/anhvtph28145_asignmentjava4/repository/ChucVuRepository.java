@@ -1,6 +1,7 @@
 package com.example.anhvtph28145_asignmentjava4.repository;
 
 import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
+import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
 import com.example.anhvtph28145_asignmentjava4.util.HibernateUtil;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
@@ -23,7 +24,7 @@ public class ChucVuRepository {
         return listCV;
     }
 
-    public ChucVu getOne(UUID id) {
+    public ChucVu getOne(String id) {
         ChucVu ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("from ChucVu where id =:id1", ChucVu.class);
@@ -35,6 +36,9 @@ public class ChucVuRepository {
         return ch;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new CuaHangRepository().getOne("4EB1A078-BB54-4705-9F29-C73A91320E87"));
+    }
     public boolean remove(ChucVu cuaHang) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {

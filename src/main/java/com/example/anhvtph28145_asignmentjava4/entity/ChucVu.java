@@ -15,8 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "ChucVu")
@@ -28,10 +26,10 @@ import java.util.UUID;
 @Builder
 public class ChucVu {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "Id", columnDefinition = "uniqueidentifier default newid()")
-    private UUID id;
+    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(name = "Id")
+    private String id;
 
     @Column(name = "Ma")
     private String ma;
@@ -39,7 +37,7 @@ public class ChucVu {
     @Column(name = "Ten")
     private String ten;
 
-    @OneToMany(mappedBy = "chucVu", fetch = FetchType.LAZY)
-    private List<NhanVien> listNhanVien;
+//    @OneToMany(mappedBy = "chucVu", fetch = FetchType.LAZY)
+//    private List<NhanVien> listNhanVien;
 
 }

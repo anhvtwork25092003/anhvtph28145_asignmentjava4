@@ -36,7 +36,7 @@ public class CuaHangServlet extends HttpServlet {
             this.detail(request, response);
         } else if (uri.contains("remove")) {
             this.remove(request, response);
-        } else if (uri.contains("/cua-hang/view-update")) {
+        } else if (uri.contains("/nhan-vien/view-update")) {
             this.viewUpdate(request, response);
         } else {
             this.hienThi(request, response);
@@ -52,7 +52,7 @@ public class CuaHangServlet extends HttpServlet {
     private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         System.out.println("id la " + id);
-        CuaHang ch = this.cuaHangService.getOne(UUID.fromString(id));
+        CuaHang ch = this.cuaHangService.getOne(id);
         System.out.println(ch);
         request.setAttribute("ch", ch);
         request.getRequestDispatcher("/cuahang/view-update.jsp").forward(request, response);
@@ -60,7 +60,7 @@ public class CuaHangServlet extends HttpServlet {
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String id = request.getParameter("id");
-        CuaHang ch = this.cuaHangService.getOne(UUID.fromString(id));
+        CuaHang ch = this.cuaHangService.getOne(id);
         HttpSession session = request.getSession();
         session.setAttribute("thongBao", cuaHangService.remove(ch));
         response.sendRedirect("/cua-hang/view-all");
@@ -68,7 +68,7 @@ public class CuaHangServlet extends HttpServlet {
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        CuaHang ch = this.cuaHangService.getOne(UUID.fromString(id));
+        CuaHang ch = this.cuaHangService.getOne(id);
         request.setAttribute("ch", ch);
         hienThi(request, response);
     }
@@ -92,13 +92,13 @@ public class CuaHangServlet extends HttpServlet {
         String quocGia = request.getParameter("quocGiaInput").trim();
 
         if (ma.isEmpty() || ten.isEmpty() || diaChi.isEmpty() || thanhPho.isEmpty() || quocGia.isEmpty()) {
-            CuaHang ch = this.cuaHangService.getOne(UUID.fromString(id));
+            CuaHang ch = this.cuaHangService.getOne(id);
             request.setAttribute("ch", ch);
             request.setAttribute("thongBaoError", "Khong duoc de trong du lieu!");
             request.getRequestDispatcher("/cuahang/view-update.jsp").forward(request, response);
         } else {
             CuaHang ch = CuaHang.builder()
-                    .id(UUID.fromString(id))
+                    .id(id)
                     .ma(ma)
                     .ten(ten)
                     .diaChi(diaChi)

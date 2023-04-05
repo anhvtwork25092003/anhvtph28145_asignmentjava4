@@ -11,7 +11,7 @@
     <title>View update cua hang!</title>
 </head>
 <body>
-<form action="/cua-hang/update" method="post">
+<form action="/nhan-vien/update" method="post">
     <div> id:<input type="text" name="idInput" readonly value="${ch.id}"></div>
     <div> Ma:<input type="text" name="maInput" value="${ch.ma}">
     </div>

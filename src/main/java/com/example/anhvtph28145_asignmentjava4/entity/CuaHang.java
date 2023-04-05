@@ -29,10 +29,10 @@ import java.util.UUID;
 
 public class CuaHang {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "Id", columnDefinition = "uniqueidentifier default newid()")
-    private UUID id;
+    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(name = "Id")
+    private String id;
 
     @Column(name = "Ma")
     private String ma;
@@ -49,6 +49,6 @@ public class CuaHang {
     @Column(name = "QuocGia")
     private String quocGia;
 
-    @OneToMany(mappedBy = "cuaHang", fetch = FetchType.LAZY)
-    private List<NhanVien> listNhanVien;
+//    @OneToMany(mappedBy = "cuaHang", fetch = FetchType.LAZY)
+//    private List<NhanVien> listNhanVien;
 }

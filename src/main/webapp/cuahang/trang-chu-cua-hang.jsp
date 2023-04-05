@@ -100,7 +100,7 @@
                            aria-disabled="true">Detail</a>
                         <a href="/cua-hang/view-update?id=${sv.id}" class="btn btn-success " role="button"
                            aria-disabled="true">Update</a>
-                        <a href="/cua-hang/remove?id=${sv.id}" class="btn btn-danger "
+                        <a href="/cua-/remove?id=${sv.id}" class="btn btn-danger "
                            onclick="return confirm('Ban muon xoa dong nay!')" role="button"
                            aria-disabled="true">Remove</a>
                     </td>

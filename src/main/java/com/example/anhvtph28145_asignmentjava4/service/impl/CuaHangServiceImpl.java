@@ -16,7 +16,7 @@ public class CuaHangServiceImpl implements CuaHangService {
     }
 
     @Override
-    public CuaHang getOne(UUID id) {
+    public CuaHang getOne(String id) {
         return this.cuaHangRepository.getOne(id);
     }
 

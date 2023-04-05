@@ -54,14 +54,14 @@ public class ChucVuServlet extends HttpServlet {
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+        ChucVu ch = this.chucVuService.getOne(id);
         request.setAttribute("ch", ch);
         hienThi(request, response);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        ChucVu cv = this.chucVuService.getOne(UUID.fromString(id));
+        ChucVu cv = this.chucVuService.getOne(id);
         HttpSession session = request.getSession();
         session.setAttribute("thongBao", this.chucVuService.remove(cv));
         response.sendRedirect("/chuc-vu/view-all");
@@ -69,7 +69,7 @@ public class ChucVuServlet extends HttpServlet {
 
     private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+        ChucVu ch = this.chucVuService.getOne(id);
         System.out.println(ch);
         request.setAttribute("ch", ch);
         request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
@@ -91,14 +91,14 @@ public class ChucVuServlet extends HttpServlet {
         String ten = request.getParameter("tenInput").trim();
         if (ma.isEmpty() || ten.isEmpty()) {
 //            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
-            ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+            ChucVu ch = this.chucVuService.getOne(id);
             request.setAttribute("ch", ch);
             request.setAttribute("thongBaoError", "Khong duoc de trong du lieu!");
             request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
 //            hienThi(request, response);
         } else {
             ChucVu ch = ChucVu.builder()
-                    .id(UUID.fromString(id))
+                    .id(id)
                     .ma(ma)
                     .ten(ten)
                     .build();

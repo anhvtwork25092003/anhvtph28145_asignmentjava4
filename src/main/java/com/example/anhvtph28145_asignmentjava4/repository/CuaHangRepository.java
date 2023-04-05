@@ -23,7 +23,7 @@ public class CuaHangRepository {
         return listCuaHang;
     }
 
-    public CuaHang getOne(UUID id) {
+    public CuaHang getOne(String id) {
         CuaHang ch = null;
         try (Session session = HibernateUtil.getFACTORY().openSession()) {
             Query query = session.createQuery("from CuaHang where id =:id1", CuaHang.class);

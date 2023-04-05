@@ -16,7 +16,7 @@ public class ChucvuServiceImpl implements ChucVuService {
     }
 
     @Override
-    public ChucVu getOne(UUID id) {
+    public ChucVu getOne(String id) {
         return this.chucVuRepository.getOne(id);
     }
 

@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface ChucVuService {
     List<ChucVu> getAll();
 
-    ChucVu getOne(UUID id);
+    ChucVu getOne(String id);
 
     String remove(ChucVu ch);
 

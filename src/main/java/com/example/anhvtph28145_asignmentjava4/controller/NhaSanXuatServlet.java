@@ -1,9 +1,8 @@
 package com.example.anhvtph28145_asignmentjava4.controller;
 
-import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
-import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
-import com.example.anhvtph28145_asignmentjava4.service.ChucVuService;
-import com.example.anhvtph28145_asignmentjava4.service.impl.ChucvuServiceImpl;
+import com.example.anhvtph28145_asignmentjava4.entity.NhaSanXuat;
+import com.example.anhvtph28145_asignmentjava4.service.NhaSanXuatService;
+import com.example.anhvtph28145_asignmentjava4.service.impl.NhaSanXuatServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet(name = "ChucVuServlet", value = {
-        "/chuc-vu/view-all",
-        "/chuc-vu/add",
-        "/chuc-vu/update",
-        "/chuc-vu/remove",
-        "/chuc-vu/detail",
-        "/chuc-vu/view-update",
+@WebServlet(name = "NhaSanXuatServlet", value = {
+        "/nha-san-xuat/view-all",
+        "/nha-san-xuat/add",
+        "/nha-san-xuat/update",
+        "/nha-san-xuat/remove",
+        "/nha-san-xuat/detail",
+        "/nha-san-xuat/view-update",
 })
-public class ChucVuServlet extends HttpServlet {
-    ChucVuService chucVuService = new ChucvuServiceImpl();
-    List<ChucVu> chucVuList = new ArrayList<>();
+public class NhaSanXuatServlet extends HttpServlet {
+    NhaSanXuatService nhaSanXuatService = new NhaSanXuatServiceImpl();
+    List<NhaSanXuat> nhaSanXuats = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,9 +36,7 @@ public class ChucVuServlet extends HttpServlet {
             this.detail(request, response);
         } else if (uri.contains("remove")) {
             this.remove(request, response);
-        }  else if (uri.contains("view-update")) {
-            this.viewUpdate(request, response);
-        }else if (uri.contains("view-update")) {
+        } else if (uri.contains("view-update")) {
             this.viewUpdate(request, response);
         } else {
             this.hienThi(request, response);
@@ -47,32 +44,32 @@ public class ChucVuServlet extends HttpServlet {
     }
 
     private void hienThi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        chucVuList = this.chucVuService.getAll();
-        request.setAttribute("listCV", chucVuList);
-        request.getRequestDispatcher("/chucv/quan-ly-chuc-vu.jsp").forward(request, response);
-    }
-
-    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
-        request.setAttribute("ch", ch);
-        hienThi(request, response);
+        nhaSanXuats = this.nhaSanXuatService.getAll();
+        request.setAttribute("listCH", nhaSanXuats);
+        request.getRequestDispatcher("/nhasanxuat/trang-chu-nha-san-xuat.jsp").forward(request, response);
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        ChucVu cv = this.chucVuService.getOne(UUID.fromString(id));
+        NhaSanXuat ch = this.nhaSanXuatService.getOne(UUID.fromString(id));
         HttpSession session = request.getSession();
-        session.setAttribute("thongBao", this.chucVuService.remove(cv));
-        response.sendRedirect("/chuc-vu/view-all");
+        session.setAttribute("thongBao", nhaSanXuatService.remove(ch));
+        response.sendRedirect("/nha-san-xuat/view-all");
     }
 
     private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+        NhaSanXuat ch = this.nhaSanXuatService.getOne(UUID.fromString(id));
         System.out.println(ch);
         request.setAttribute("ch", ch);
-        request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
+        request.getRequestDispatcher("/nhasanxuat/view-update.jsp").forward(request, response);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        NhaSanXuat ch = this.nhaSanXuatService.getOne(UUID.fromString(id));
+        request.setAttribute("ch", ch);
+        hienThi(request, response);
     }
 
     @Override
@@ -90,42 +87,41 @@ public class ChucVuServlet extends HttpServlet {
         String ma = request.getParameter("maInput").trim();
         String ten = request.getParameter("tenInput").trim();
         if (ma.isEmpty() || ten.isEmpty()) {
-//            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
-            ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+//             validate trống, thực hiện gửi thông báo về trang view-update với url hiện tại, lấy lại đối tượng nsx để hieernt hị
+            NhaSanXuat ch = this.nhaSanXuatService.getOne(UUID.fromString(id));
             request.setAttribute("ch", ch);
-            request.setAttribute("thongBaoError", "Khong duoc de trong du lieu!");
-            request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
-//            hienThi(request, response);
+            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
+            request.getRequestDispatcher("/nhasanxuat/view-update.jsp").forward(request, response);
         } else {
-            ChucVu ch = ChucVu.builder()
+            NhaSanXuat ch = NhaSanXuat.builder()
                     .id(UUID.fromString(id))
                     .ma(ma)
                     .ten(ten)
                     .build();
-            this.chucVuService.update(ch);
-            response.sendRedirect("/chuc-vu/view-all");
+            HttpSession session = request.getSession();
+            session.setAttribute("thongBao", this.nhaSanXuatService.update(ch));
+            response.sendRedirect("/nha-san-xuat/view-all");
         }
-
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String ma = request.getParameter("maInput").trim();
         String ten = request.getParameter("tenInput").trim();
-
         if (ma.isEmpty() || ten.isEmpty()) {
-//            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
+// bắt lỗi validate khi thêm, dùng sesion trả về thông báo ở trang chủ
             HttpSession session = request.getSession();
             session.setAttribute("thongBaoError", "Khong duoc de trong du lieu nhe!");
-            response.sendRedirect("/chuc-vu/view-all");
-//            hienThi(request, response);
+            response.sendRedirect("/nha-san-xuat/view-all");
         } else {
-            ChucVu ch = ChucVu.builder()
+            NhaSanXuat ch = NhaSanXuat.builder()
                     .ma(ma)
                     .ten(ten)
                     .build();
-            this.chucVuService.add(ch);
-            response.sendRedirect("/chuc-vu/view-all");
+            HttpSession session = request.getSession();
+            session.setAttribute("thongBao", this.nhaSanXuatService.add(ch));
+            response.sendRedirect("/nha-san-xuat/view-all");
         }
-
     }
+
+
 }

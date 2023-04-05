@@ -2,10 +2,8 @@ package com.example.anhvtph28145_asignmentjava4.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,19 +13,17 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
-
 @Entity
-@Table(name = "CuaHang")
+@Table(name = "KhachHang")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class CuaHang {
+public class KhachHang {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -40,15 +36,22 @@ public class CuaHang {
     @Column(name = "Ten")
     private String ten;
 
+    @Column(name = "TenDem")
+    private String tenDem;
+
+    @Column(name = "Ho")
+    private String ho;
+    @Column(name = "NgaySinh")
+    private Date ngaySinh;
+    @Column(name = "Sdt")
+    private String sdt;
     @Column(name = "DiaChi")
     private String diaChi;
-
     @Column(name = "ThanhPho")
     private String thanhPho;
-
     @Column(name = "QuocGia")
     private String quocGia;
+    @Column(name = "MatKhau")
+    private String matKhau;
 
-    @OneToMany(mappedBy = "cuaHang", fetch = FetchType.LAZY)
-    private List<NhanVien> listNhanVien;
 }

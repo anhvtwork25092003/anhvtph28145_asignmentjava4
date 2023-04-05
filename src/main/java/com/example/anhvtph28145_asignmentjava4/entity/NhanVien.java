@@ -2,10 +2,10 @@ package com.example.anhvtph28145_asignmentjava4.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +15,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
-
+@Table(name = "NhanVien")
 @Entity
-@Table(name = "CuaHang")
 @Getter
 @Setter
 @ToString
@@ -27,7 +26,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 
-public class CuaHang {
+public class NhanVien {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -40,15 +39,37 @@ public class CuaHang {
     @Column(name = "Ten")
     private String ten;
 
+    @Column(name = "TenDem")
+    private String tenDem;
+
+    @Column(name = "Ho")
+    private String ho;
+
+    @Column(name = "GioiTinh")
+    private String gioiTinh;
+
+    @Column(name = "NgaySinh")
+    private Date ngaySinh;
+
     @Column(name = "DiaChi")
     private String diaChi;
+    @Column(name = "Sdt")
+    private String sdt;
+    @Column(name = "MatKhau")
+    private String matKhau;
+    @ManyToOne()
+    @JoinColumn(name = "IdCH")
+    private CuaHang cuaHang;
+    @ManyToOne()
+    @JoinColumn(name = "IdCV")
+    private ChucVu chucVu;
 
-    @Column(name = "ThanhPho")
-    private String thanhPho;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "IdGuiBC", columnDefinition = "uniqueidentifier default newid()")
+    private UUID idGuiBC;
 
-    @Column(name = "QuocGia")
-    private String quocGia;
+    @Column(name = "TrangThai")
+    private Integer trangThai;
 
-    @OneToMany(mappedBy = "cuaHang", fetch = FetchType.LAZY)
-    private List<NhanVien> listNhanVien;
 }

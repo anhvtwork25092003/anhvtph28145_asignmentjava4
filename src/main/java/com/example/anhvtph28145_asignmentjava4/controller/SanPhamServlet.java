@@ -1,9 +1,9 @@
 package com.example.anhvtph28145_asignmentjava4.controller;
 
 import com.example.anhvtph28145_asignmentjava4.entity.ChucVu;
-import com.example.anhvtph28145_asignmentjava4.entity.CuaHang;
-import com.example.anhvtph28145_asignmentjava4.service.ChucVuService;
-import com.example.anhvtph28145_asignmentjava4.service.impl.ChucvuServiceImpl;
+import com.example.anhvtph28145_asignmentjava4.entity.SanPham;
+import com.example.anhvtph28145_asignmentjava4.service.SanPhamService;
+import com.example.anhvtph28145_asignmentjava4.service.impl.SanPhamServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,17 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet(name = "ChucVuServlet", value = {
-        "/chuc-vu/view-all",
-        "/chuc-vu/add",
-        "/chuc-vu/update",
-        "/chuc-vu/remove",
-        "/chuc-vu/detail",
-        "/chuc-vu/view-update",
+@WebServlet(name = "SanPhamServlet", value = {
+        "/san-pham/view-all",
+        "/san-pham/add",
+        "/san-pham/update",
+        "/san-pham/remove",
+        "/san-pham/detail",
+        "/san-pham/view-update",
 })
-public class ChucVuServlet extends HttpServlet {
-    ChucVuService chucVuService = new ChucvuServiceImpl();
-    List<ChucVu> chucVuList = new ArrayList<>();
+public class SanPhamServlet extends HttpServlet {
+    SanPhamService sanPhamService = new SanPhamServiceImpl();
+    List<SanPham> sanPhams = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,9 +37,7 @@ public class ChucVuServlet extends HttpServlet {
             this.detail(request, response);
         } else if (uri.contains("remove")) {
             this.remove(request, response);
-        }  else if (uri.contains("view-update")) {
-            this.viewUpdate(request, response);
-        }else if (uri.contains("view-update")) {
+        } else if (uri.contains("view-update")) {
             this.viewUpdate(request, response);
         } else {
             this.hienThi(request, response);
@@ -47,32 +45,32 @@ public class ChucVuServlet extends HttpServlet {
     }
 
     private void hienThi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        chucVuList = this.chucVuService.getAll();
-        request.setAttribute("listCV", chucVuList);
-        request.getRequestDispatcher("/chucv/quan-ly-chuc-vu.jsp").forward(request, response);
-    }
-
-    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
-        request.setAttribute("ch", ch);
-        hienThi(request, response);
-    }
-
-    private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String id = request.getParameter("id");
-        ChucVu cv = this.chucVuService.getOne(UUID.fromString(id));
-        HttpSession session = request.getSession();
-        session.setAttribute("thongBao", this.chucVuService.remove(cv));
-        response.sendRedirect("/chuc-vu/view-all");
+        sanPhams = this.sanPhamService.getAll();
+        request.setAttribute("listCH", sanPhams);
+        request.getRequestDispatcher("/sanpham/quan-ly-san-pham.jsp").forward(request, response);
     }
 
     private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+        SanPham ch = this.sanPhamService.getOne(UUID.fromString(id));
         System.out.println(ch);
         request.setAttribute("ch", ch);
-        request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
+        request.getRequestDispatcher("/sanpham/view-update.jsp").forward(request, response);
+    }
+
+    private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        SanPham cv = this.sanPhamService.getOne(UUID.fromString(id));
+        HttpSession session = request.getSession();
+        session.setAttribute("thongBaoThanhCongOrThatBai", this.sanPhamService.remove(cv));
+        response.sendRedirect("/san-pham/view-all");
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        SanPham ch = this.sanPhamService.getOne(UUID.fromString(id));
+        request.setAttribute("ch", ch);
+        hienThi(request, response);
     }
 
     @Override
@@ -85,47 +83,44 @@ public class ChucVuServlet extends HttpServlet {
         }
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("idInput").trim();
         String ma = request.getParameter("maInput").trim();
         String ten = request.getParameter("tenInput").trim();
         if (ma.isEmpty() || ten.isEmpty()) {
 //            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
-            ChucVu ch = this.chucVuService.getOne(UUID.fromString(id));
+            SanPham ch = this.sanPhamService.getOne(UUID.fromString(id));
             request.setAttribute("ch", ch);
-            request.setAttribute("thongBaoError", "Khong duoc de trong du lieu!");
-            request.getRequestDispatcher("/chucv/view-update-chuc-vu.jsp").forward(request, response);
+            request.setAttribute("thongBaoValidateViewUpdate", "Khong duoc de trong du lieu!");
+            request.getRequestDispatcher("/sanpham/view-update.jsp").forward(request, response);
 //            hienThi(request, response);
         } else {
-            ChucVu ch = ChucVu.builder()
+            SanPham ch = SanPham.builder()
                     .id(UUID.fromString(id))
                     .ma(ma)
                     .ten(ten)
                     .build();
-            this.chucVuService.update(ch);
-            response.sendRedirect("/chuc-vu/view-all");
+            HttpSession session = request.getSession();
+            session.setAttribute("thongBaoThanhCongOrThatBai", this.sanPhamService.update(ch));
+            response.sendRedirect("/san-pham/view-all");
         }
-
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String ma = request.getParameter("maInput").trim();
         String ten = request.getParameter("tenInput").trim();
-
         if (ma.isEmpty() || ten.isEmpty()) {
-//            request.setAttribute("thongBaoAdd", "Khong duoc de trong du lieu!");
             HttpSession session = request.getSession();
-            session.setAttribute("thongBaoError", "Khong duoc de trong du lieu nhe!");
-            response.sendRedirect("/chuc-vu/view-all");
-//            hienThi(request, response);
+            session.setAttribute("thongBaoValidate", "Khong duoc de trong du lieu nhe!");
+            response.sendRedirect("/san-pham/view-all");
         } else {
-            ChucVu ch = ChucVu.builder()
+            SanPham ch = SanPham.builder()
                     .ma(ma)
                     .ten(ten)
                     .build();
-            this.chucVuService.add(ch);
-            response.sendRedirect("/chuc-vu/view-all");
+            HttpSession session = request.getSession();
+            session.setAttribute("thongBaoThanhCongOrThatBai", this.sanPhamService.add(ch));
+            response.sendRedirect("/san-pham/view-all");
         }
-
     }
 }

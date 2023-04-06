@@ -30,66 +30,66 @@
         <form action="/nhan-vien/add" method="post">
             <%--            id--%>
             <div class="mb-3 mt-3">
-                <label for="id">ID:</label>
-                <input type="text" class="form-control" id="id" placeholder="Id sẽ tự tăng" readonly name="id"
-                       value="${ch.id}">
+                <label for="idInput">ID:</label>
+                <input type="text" class="form-control" id="idInput" placeholder="Id sẽ tự tăng" readonly name="idInput"
+                       value="${nv.id}">
             </div>
             <%--    ma--%>
             <div class="mb-3">
                 <label for="ma">Ma:</label>
-                <input type="text" class="form-control" id="ma" placeholder="" name="ma" value="${ch.ma}">
+                <input type="text" class="form-control" id="ma" placeholder="" name="ma" value="${nv.ma}">
             </div>
             <%--    ten--%>
             <div class="mb-3">
                 <label for="ten">ten:</label>
-                <input type="text" class="form-control" id="ten" placeholder="" name="ten" value="${ch.ten}">
+                <input type="text" class="form-control" id="ten" placeholder="" name="ten" value="${nv.ten}">
             </div>
             <%--    ten dem--%>
             <div class="mb-3">
                 <label for="tenDem">ten dem:</label>
-                <input type="text" class="form-control" id="tenDem" placeholder="" name="tenDem" value="${ch.tenDem}">
+                <input type="text" class="form-control" id="tenDem" placeholder="" name="tenDem" value="${nv.tenDem}">
             </div>
             <%--    ho--%>
             <div class="mb-3">
                 <label for="ho">Ho:</label>
-                <input type="text" class="form-control" id="ho" placeholder="" name="ho" value="${ch.ho}">
+                <input type="text" class="form-control" id="ho" placeholder="" name="ho" value="${nv.ho}">
             </div>
             <%--gioi tinh--%>
             <div class="mb-3">
                 <div class="col-6">
                     <label>Giới tính</label>
-                    <input type="radio" name="gioiTinhInput" ${ch.gioiTinh == "Nam"?"checked":""} value="Nam" checked/>Nam
-                    <input type="radio" name="gioiTinhInput" ${ch.gioiTinh == "Nu"?"checked":""} value="Nu"/>Nu
+                    <input type="radio" name="gioiTinhInput" ${nv.gioiTinh == "Nam"?"checked":""} value="Nam" checked/>Nam
+                    <input type="radio" name="gioiTinhInput" ${nv.gioiTinh == "Nu"?"checked":""} value="Nu"/>Nu
                 </div>
             </div>
             <%--    ngay sinh--%>
             <div class="mb-3">
                 <label for="ngaySinh">Ngay Sinh:</label>
                 <input type="date" class="form-control" id="ngaySinh" placeholder="" name="ngaySinh"
-                       value="${ch.ngaySinh}">
+                       value="${nv.ngaySinh}">
             </div>
             <%--    sdt--%>
             <div class="mb-3">
                 <label for="sdt">SDT:</label>
-                <input type="text" class="form-control" id="sdt" placeholder="" name="sdt" value="${ch.sdt}">
+                <input type="text" class="form-control" id="sdt" placeholder="" name="sdt" value="${nv.sdt}">
             </div>
             <%--    dia chi--%>
             <div class="mb-3">
                 <label for="place">Dia chi:</label>
-                <input type="text" class="form-control" id="place" placeholder="" name="diaChi" value="${ch.diaChi}">
+                <input type="text" class="form-control" id="place" placeholder="" name="diaChi" value="${nv.diaChi}">
             </div>
             <%--    mat khau--%>
             <div class="mb-3">
                 <label for="pass">Mat Khau:</label>
                 <input type="password" class="form-control" id="pass" placeholder="" name="matKhau"
-                       value="${ch.matKhau}">
+                       value="${nv.matKhau}">
             </div>
             <%--    Cua Hang--%>
             <div class="mb-3">
                 <label>Cua Hang</label> </br>
                 <select name="IdCH" class="form-control" required>
                     <c:forEach items="${danhSachCH}" var="ch">
-                        <option value="${ch.id}">${ch.ten}</option>
+                        <option value="${ch.id}" ${nv.cuaHang.id == ch.id ? "selected" : ""}>${ch.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -98,7 +98,8 @@
                 <label>Chuc Vu</label> </br>
                 <select name="IdCV" class="form-control" required>
                     <c:forEach items="${danhSachCV}" var="cv">
-                        <option value="${cv.id}">${cv.ten}</option>
+                        <%--                    <option value="${cv.id}">${cv.ten}</option>--%>
+                        <option value="${cv.id}" ${nv.chucVu.id == cv.id ? "selected" : ""}>${cv.ten}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -106,8 +107,8 @@
             <div class="mb-3">
                 <div class="col-6">
                     <label>Trang Thai</label>
-                    <input type="radio" name="trangThai" ${ch.trangThai == 1?"checked":""} value="1" checked/>Lam
-                    <input type="radio" name="trangThai" ${ch.trangThai == 0?"checked":""} value="0"/>Nghi
+                    <input type="radio" name="trangThai" ${nv.trangThai == 1?"checked":""} value="1" checked/>Lam
+                    <input type="radio" name="trangThai" ${nv.trangThai == 0?"checked":""} value="0"/>Nghi
                 </div>
             </div>
             <button type="submit" class="btn btn-success" onclick="return confirm('Xán nhận thêm cửa hàng?')">ADD
@@ -173,5 +174,11 @@
     </div>
     <%--    end table của hàng--%>
 </div>
+<script>
+    // sử dụng JavaScript để điền giá trị vào ô input date
+    var birthday = '${nv.ngaySinh}';
+    var formattedDate = new Date(birthday).toISOString().substr(0, 10);
+    document.getElementById("ngaySinh").value = formattedDate;
+</script>
 </body>
 </html>

@@ -70,14 +70,24 @@ public class NhanVienServlet extends HttpServlet {
         String id = request.getParameter("id");
         NhanVien ch = this.nhanVienService.getOne(id);
         HttpSession session = request.getSession();
-        session.setAttribute("thongBao", nhanVienService.remove(ch));
+        session.setAttribute("thongBaoThanhCongOrThatBai", nhanVienService.remove(ch));
         response.sendRedirect("/nhan-vien/view-all");
     }
 
-    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) {
+    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        NhanVien nv = this.nhanVienService.getOne(id);
+        request.setAttribute("danhSachCV", listCV);
+        request.setAttribute("danhSachCH", listCH);
+        request.setAttribute("nv", nv);
+        request.getRequestDispatcher("/nhanvien/view-update.jsp").forward(request, response);
     }
 
-    private void detail(HttpServletRequest request, HttpServletResponse response) {
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        NhanVien nv = this.nhanVienService.getOne(id);
+        request.setAttribute("nv", nv);
+        hienThi(request, response);
     }
 
     @SneakyThrows
@@ -91,7 +101,61 @@ public class NhanVienServlet extends HttpServlet {
         }
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response) {
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException, ServletException {
+        String id = request.getParameter("idInput");
+        String ma = request.getParameter("ma");
+        String ten = request.getParameter("ten");
+        String tenDem = request.getParameter("tenDem");
+        String ho = request.getParameter("ho");
+        String gioiTinh = request.getParameter("gioiTinhInput");
+        String ngaySinhStr = request.getParameter("ngaySinh");
+        String sdt = request.getParameter("sdt");
+        String diaChi = request.getParameter("diaChi");
+        String matKhau = request.getParameter("matKhau");
+        String idch = request.getParameter("IdCH");
+        System.out.println("idchhhhhhhhhhhhhhhhhh" + idch);
+        String idcv = request.getParameter("IdCV");
+        System.out.println("9999999999999999" + idcv);
+        String trangThai = request.getParameter("trangThai");
+
+        // Kiểm tra giá trị thuộc tính của đối tượng
+        if (ma.trim().equals("") || ten.trim().equals("")
+                || tenDem.trim().equals("") || ho.trim().equals("")
+                || ngaySinhStr.isEmpty() || sdt.trim().equals("")
+                || diaChi.trim().equals("") || matKhau.trim().equals("")
+                || idch.trim().equals("") || idcv.trim().equals("")
+                || trangThai.trim().equals("")) {
+            // Nếu tên rỗng hoặc null, hiển thị thông báo lỗi
+            NhanVien nv = this.nhanVienService.getOne(id);
+            request.setAttribute("danhSachCV", listCV);
+            request.setAttribute("danhSachCH", listCH);
+            request.setAttribute("nv", nv);
+            request.setAttribute("thongBaoValidate", "Khong duoc de trong du lieu nhe!");
+            request.getRequestDispatcher("/nhanvien/view-update.jsp").forward(request, response);
+
+            return;
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(ngaySinhStr);
+            NhanVien kh = NhanVien.builder()
+                    .id(id)
+                    .ma(ma)
+                    .ten(ten)
+                    .tenDem(tenDem)
+                    .ho(ho)
+                    .ngaySinh(date)
+                    .sdt(sdt)
+                    .diaChi(diaChi)
+                    .gioiTinh(gioiTinh)
+                    .chucVu(this.chucVuService.getOne(idcv))
+                    .cuaHang(this.cuaHangService.getOne(idch))
+                    .matKhau(matKhau)
+                    .trangThai(Integer.valueOf(trangThai))
+                    .build();
+            HttpSession session = request.getSession();
+            session.setAttribute("thongBaoThanhCongOrThatBai", this.nhanVienService.update(kh));
+            response.sendRedirect("/nhan-vien/view-all");
+        }
     }
 
     private void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
